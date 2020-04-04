@@ -3,7 +3,6 @@ import {Container} from 'react-bootstrap';
 import Banner from './banner';
 import Login from './login';
 import Register from './register';
-import Footer from './footer'
 
 const Auth = () => {
   const [haveACCOUNT, setHaveACCOUNT] = useState(true);
@@ -13,7 +12,6 @@ const Auth = () => {
       <Banner />
       {haveACCOUNT?<Login onMoveToRegister={()=>{setHaveACCOUNT(false)}}/>:<Register onMoveToLogin={()=>{setHaveACCOUNT(true)}}/>}
     </Container>
-    <Footer />
     </>
   )
 }

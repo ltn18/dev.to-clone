@@ -1,8 +1,11 @@
-import React, { useState } from 'react'
-import { Form, Button, Alert } from 'react-bootstrap';
+import React, {useState, useEffect} from 'react'
+import { Form, Button, Alert, Modal } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import axios from '../../config/axios'
+
+import axios from '../../config/axios';
+
+import useAsync from '../../hooks/useAsync';
 
 const ValidateSchema = Yup.object().shape({
   username: Yup.string()
@@ -17,70 +20,69 @@ const ValidateSchema = Yup.object().shape({
     .required("Confirm password is required"),
 });
 
-const Register = (props) => {
-  const { onMoveToLogin } = props;
+// const Register = (props) => {
+//   const { onMoveToLogin } = props;
 
-  const [apiDATA, setApiDATA] = useState(
-    {
-      loading: false,
-      result: null,
-      error: null,
-    }
-  )
+//   const [registerApiData, fetchRegister] = useAsync((username, password) => {
+//     axios.post("/auth/register",
+//       {
+//         username: username,
+//         password: password
+//       }
+//     )
+//   });
+const Register = ({ onMoveToLogin }) => {
+  const [registerApiData, fetchRegister] = useAsync((username, password) =>
+    axios.post("/auth/register", {
+      username: username,
+      password: password
+    })
+  );
 
-  const formik = useFormik(
-    {
+  const [successModalVisible, setSuccessModalVisible] = useState(false);
+  const [failureModalVisible, setFailureModalVisible] = useState(false);
+
+  const formik = useFormik({
       validationSchema: ValidateSchema,
       initialValues: {
         username: "",
         password: "",
         confirmPassword: "",
       },
-
       onSubmit: values => {
-        setApiDATA({
-          ...apiDATA,
-          loading: true,
-          result: null,
-          error: null,
-        })
+        fetchRegister(values.username, values.password);
+    }});
 
-        axios
-          .post("/auth/register",
-            {
-              username: values.username,
-              password: values.password
-            }
-          )
-          .then(res => {
-            setApiDATA({
-              loading: false,
-              result: res.data,
-              error: null,
-            });
-          })
-          .catch(err => {
-            console.log('catched');
-            setApiDATA({
-              loading: false,
-              result: null,
-              error: err,
-            });
-          });
-      }
+  useEffect(() => {
+    if (registerApiData.result){
+      setSuccessModalVisible(true);
     }
-  )
+  }, [registerApiData.result])
+
+  useEffect(() => {
+    if (registerApiData.error){
+      setFailureModalVisible(true);
+    }
+  }, [registerApiData.error])
 
   return (
     <div className="w-50">
-      {
-        apiDATA.error && 
-        <Alert variant="danger">
+      <Modal show={successModalVisible} centered>
+        <Modal.Body className="alert-success text-center">
+          <Alert.Heading>Welcome to Dev Story</Alert.Heading>
+          <p className="text-center">You have successfully registered an account!</p>
+          <Button variant="success" size="sm" onClick={() => setSuccessModalVisible(false)}>Confirm</Button>
+        </Modal.Body>
+      </Modal>
+      
+      <Modal show={failureModalVisible} centered>
+        <Modal.Body className="alert-danger text-center">
           <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
-          <p>{apiDATA.error.message}</p>
-        </Alert> 
-        
-      }
+          {registerApiData.error && <p className="text-center">{registerApiData.error.message}</p>}
+          <Button variant="danger" size="sm" onClick={() => setFailureModalVisible(false)}>Confirm</Button>
+        </Modal.Body>
+      </Modal>
+
       <h4 className="code text-center">Register</h4>
       <Form onSubmit={formik.handleSubmit}>
         <Form.Group>
@@ -129,7 +131,16 @@ const Register = (props) => {
         </Form.Group>
 
         <Form.Group>
-          <Button variant="info" block className="code text-center" type="submit" disabled={apiDATA.loading}>Register</Button>
+          <Button
+            variant="info"
+            block
+            className="code text-center"
+            type="submit"
+            disabled={registerApiData.loading}
+          >
+            Register
+          </Button>
+
           <Form.Text className="code text-center">
             Already have an account?{" "}
             <a href="#" onClick={onMoveToLogin}>Login</a>

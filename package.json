@@ -1,0 +1,27 @@
+{
+  "name": "dev_story",
+  "version": "1.0.0",
+  "description": "\"# Dev_Story\"",
+  "main": "test.js",
+  "dependencies": {
+    "concurrently": "^5.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "backend": "cd backend && nodemon index.js",
+    "frontend": "npm start --prefix frontend",
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LamNguyenAtCWRU/Dev_Story.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LamNguyenAtCWRU/Dev_Story/issues"
+  },
+  "homepage": "https://github.com/LamNguyenAtCWRU/Dev_Story#readme",
+  "keywords": []
+}

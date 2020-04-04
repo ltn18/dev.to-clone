@@ -7,7 +7,7 @@ const style = {
 
 const Footer = () => {
   return (
-    <div style={style} className="py-3 code">
+    <div style={style} className="py-3 code d-flex flex-column">
       <Container className="d-flex">
         <div className="d-flex flex-column">   
           <p>Open Source &nbsp;<span role="img" aria-label="Text">😇</span></p>   

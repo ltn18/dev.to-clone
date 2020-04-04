@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { register } = require('../services/auth');
+const { register, login } = require('../services/auth');
 const ERROR = require('../type/error')
 /**
  * auth/register
@@ -30,7 +30,8 @@ router.post("/register", (req, res) => {
  * auth/login
  */
 router.post("/login", (req, res) => {
-
+  const {username, password} = req.body;
+  login(username, password);
 })
 
 module.exports = router;

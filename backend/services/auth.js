@@ -11,7 +11,7 @@ const register = async (username, password) => {
 
   // async func vì truy cập vào DB
   const user = await User.findOne({username: username});
-  console.log(user);
+  // console.log(user);
   if (user) throw new Error(ERROR.USERNAME_EXISTED);
   const newUser = new User({
     username: username,
@@ -23,4 +23,15 @@ const register = async (username, password) => {
   return newUser.save();
 }
 
-module.exports = {register}
+const login = async (username, password) => {
+  /**
+   * Step 1: check if username is existed
+   * Step 2: check if password is correct -> convert from hash/salt compare
+   */
+
+  const user = User.findOne({username: username});
+  if (!user) throw new Error(ERROR.USERNAME_NOT_EXISTED);
+  console.log(this.salt)
+}
+
+module.exports = {register, login}

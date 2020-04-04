@@ -29,7 +29,7 @@ const userSchema = mongoose.Schema({
 
 userSchema.methods.generatePassword = function(password) {
   this.salt = crypto.randomBytes(16).toString("hex");  
-  this.hash = crypto.pbkdf2Sync(password, this.salt, 10000, 64, "sha512")
+  this.hash = crypto.pbkdf2Sync(password, this.salt, 10000, 64, "sha512");
 }
 
 const User = mongoose.model("User", userSchema);
