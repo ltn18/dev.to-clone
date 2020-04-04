@@ -9,7 +9,8 @@ import useAsync from '../../hooks/useAsync';
 
 const ValidationSchema = Yup.object().shape({
   username: Yup.string().required("Username is required"),
-  password: Yup.string().required("Password is required")
+  password: Yup.string().required("Password is required"),
+  rememberMe: Yup.string(),
 });
 
 const Login = ({ onMoveToRegister }) => {
@@ -18,7 +19,7 @@ const Login = ({ onMoveToRegister }) => {
   const [loginApiData, fetchLogin] = useAsync((username, password) => {
     axios.post("/auth/login", {
       username: username,
-      password: password
+      password: password,
     })
   });
 
@@ -27,17 +28,20 @@ const Login = ({ onMoveToRegister }) => {
     initialValues: {
       username: "",
       password: "",
+      rememberMe: false,
     },
     onSubmit: values => {
       // truyền biến values vào formik đã có structure tạo bên trên
+      console.log(values);
       fetchLogin(values.username, values.password);
     }
   });
 
+
   return (
     <div className="w-50">
       <h4 className="code text-center">Login</h4>
-      <Form>
+      <Form onSubmit={formik.handleSubmit}>
         <Form.Group>
           <Form.Label className="code text-center">Username</Form.Label>
           <Form.Control
@@ -69,7 +73,14 @@ const Login = ({ onMoveToRegister }) => {
         </Form.Group>
 
         <Form.Group>
-          <Form.Check type="checkbox" className="code" label="Remember me" />
+          <Form.Check
+            type="checkbox"
+            className="code"
+            label="Remember me"
+            name="rememberMe"
+            value={formik.values.rememberMe}
+            onChange={formik.handleChange}
+          />
         </Form.Group>
 
         <Form.Group>
@@ -77,6 +88,7 @@ const Login = ({ onMoveToRegister }) => {
             variant="info"
             block
             className="code text-center"
+            type="submit"
             disabled={loginApiData.loading}
           >
             Login
