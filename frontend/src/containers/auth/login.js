@@ -1,5 +1,5 @@
-import React from 'react';
-import { Form, Button } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Form, Button, Modal, Alert } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
@@ -16,12 +16,18 @@ const ValidationSchema = Yup.object().shape({
 const Login = ({ onMoveToRegister }) => {
 
   // tạo structure cho hàm fetchLogin, chuẩn bị đưa vào formik
-  const [loginApiData, fetchLogin] = useAsync((username, password) => {
-    axios.post("/auth/login", {
-      username: username,
-      password: password,
-    })
-  });
+  const [loginApiData, fetchLogin] = useAsync(
+    // Async Function
+    (username, password) => {
+      axios.post("/auth/login", {
+        username: username,
+        password: password,
+      })
+    }
+    // Ket thuc async function
+  );
+
+  const [failureModalVisible, setFailureModalVisible] = useState(false);
 
   const formik = useFormik({
     validationSchema: ValidationSchema,
@@ -37,9 +43,23 @@ const Login = ({ onMoveToRegister }) => {
     }
   });
 
+  useEffect(() => {
+    if (loginApiData.error){
+      setFailureModalVisible(true);
+      console.log(loginApiData.error);
+    }
+  }, [loginApiData.error])
+
 
   return (
     <div className="w-50">
+      <Modal show={failureModalVisible} centered>
+        <Modal.Body className="alert-danger text-center">
+          <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
+          {loginApiData.error && <p className="text-center">{loginApiData.error.message}</p>}
+          <Button variant="danger" size="sm" onClick={() => setFailureModalVisible(false)}>Confirm</Button>
+        </Modal.Body>
+      </Modal>
       <h4 className="code text-center">Login</h4>
       <Form onSubmit={formik.handleSubmit}>
         <Form.Group>

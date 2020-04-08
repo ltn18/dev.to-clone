@@ -25,14 +25,20 @@ const userSchema = mongoose.Schema({
     linkedIn: String,
   },
   skills: [String],
-})
+});
 
-userSchema.methods.generatePassword = function(password) {
-  this.salt = crypto.randomBytes(16).toString("hex");  
-  this.hash = crypto.pbkdf2Sync(password, this.salt, 10000, 64, "sha512");
-}
+userSchema.methods.generatePassword = function (password) {
+  this.salt = crypto.randomBytes(16).toString("hex");
+  this.hash = crypto.pbkdf2Sync(password, this.salt, 10000, 64, "sha512").toString('hex');
+};
+
+userSchema.methods.validatePassword = function (password) {
+  // salt của user schema cũ đóng vai trò như một param để chuyển dạng hash 
+  const hash = crypto.pbkdf2Sync(password, this.salt, 10000, 64, "sha512").toString('hex');
+  return hash === this.hash;
+};
 
 const User = mongoose.model("User", userSchema);
 
-module.exports = {User, userSchema};
+module.exports = { User, userSchema };
 

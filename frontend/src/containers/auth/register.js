@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { Form, Button, Alert, Modal } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -43,24 +43,25 @@ const Register = ({ onMoveToLogin }) => {
   const [failureModalVisible, setFailureModalVisible] = useState(false);
 
   const formik = useFormik({
-      validationSchema: ValidateSchema,
-      initialValues: {
-        username: "",
-        password: "",
-        confirmPassword: "",
-      },
-      onSubmit: values => {
-        fetchRegister(values.username, values.password);
-    }});
+    validationSchema: ValidateSchema,
+    initialValues: {
+      username: "",
+      password: "",
+      confirmPassword: "",
+    },
+    onSubmit: values => {
+      fetchRegister(values.username, values.password);
+    }
+  });
 
   useEffect(() => {
-    if (registerApiData.result){
+    if (registerApiData.result) {
       setSuccessModalVisible(true);
     }
   }, [registerApiData.result])
 
   useEffect(() => {
-    if (registerApiData.error){
+    if (registerApiData.error) {
       setFailureModalVisible(true);
     }
   }, [registerApiData.error])
@@ -74,7 +75,7 @@ const Register = ({ onMoveToLogin }) => {
           <Button variant="success" size="sm" onClick={() => setSuccessModalVisible(false)}>Confirm</Button>
         </Modal.Body>
       </Modal>
-      
+
       <Modal show={failureModalVisible} centered>
         <Modal.Body className="alert-danger text-center">
           <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
