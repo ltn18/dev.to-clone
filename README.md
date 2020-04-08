@@ -30,7 +30,7 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 
 ## Quan Ngo Huu's useAsync Hook
 ### Code
-![](assets/code.png);
+![](assets/code.PNG);
 import { useState } from 'react';
 
 const useAsync = asyncFunction => {
