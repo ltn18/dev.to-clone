@@ -31,78 +31,18 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 ## Quan Ngo Huu's useAsync Hook
 ### Code
 ![](assets/code.PNG);
-import { useState } from 'react';
-
-const useAsync = asyncFunction => {
-  const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState(null);
-  const [error, setError] = useState(null);
-
-  function execute() {
-    setLoading(true);
-    asyncFunction
-    .apply(this, arguments)
-    .then(res => setResult(res))
-    .catch(err => setError(err))
-    .finally(() => setLoading(false));
-  }
-  
-  return [{loading, result, error}, execute];
-};
-
-export default useAsync;
 
 ### Code Flow
 #### How to use
-const [loginApiData, fetchLogin] = useAsync(
-  (username, password) => {
-    axios.post("/auth/login", {
-      username: username,
-      password: password,
-    })
-  }
-);
-
-values => fetchLogin(values.username, values.password);
+![](assets/how_to_use.PNG)
 
 #### Explanation
 ##### Init state
-loginApiData = {false, null, null};
-
-asyncFunction = 
-  (username, password) => {
-    axios.post("/auth/login", {
-      username: username,
-      password: password,
-    })
-  }
-
-fetchLogin = 
-  function execute() {
-    setLoading(true);
-    asyncFunction
-    .apply(this, arguments) // this will take parameters from useAsync
-    .then(res => setResult(res))
-    .catch(err => setError(err))
-    .finally(() => setLoading(false));
-  }
+![](assets/init_state.PNG)
 
 ##### After call fetchLogin
-fetchLogin = 
-  function execute() {
-    setLoading(true);
-    axios
-    .post("/auth/login", {
-      username: values.username,
-      password: values.password,
-    })
-    .apply(this, arguments)
-    .then(res => setResult(res))
-    .catch(err => setError(err))
-    .finally(() => setLoading(false));
-  }
-  
-loginApiData is then updated after calling fetchLogin(values.username, values.password);
+![](assets/after_call.PNG)
+
 
 
 
