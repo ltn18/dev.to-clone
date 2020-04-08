@@ -9,9 +9,9 @@ const ERROR = require('../type/error')
 router.post("/register", (req, res) => {
   const { username, password } = req.body;
   register(username, password)
-    // tại sao truyền res lại sai mà result lại đúng?
+    // vẫn lưu vào DB mặc dù 
     .then(result => {
-      console.log(result);
+      console.log(result)
       res.json({ success: true });
     })
     .catch(err => {
@@ -32,11 +32,12 @@ router.post("/register", (req, res) => {
  */
 router.post("/login", (req, res) => {
   const { username, password } = req.body;
+  console.log(username, password);
   login(username, password)
-    .then(user => res.json(user))
-    .catch(err => {
+    .then((user) => res.json(user))
+    .catch((err) => {
       res.status(401).json({ success: false, err: err.message });
-    })
+    });
 });
 
 

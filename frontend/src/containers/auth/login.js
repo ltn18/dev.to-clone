@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Form, Button, Modal, Alert } from 'react-bootstrap';
+import React, { useState, useEffect } from "react";
+import { Form, Button, Modal, Alert } from "react-bootstrap";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
@@ -7,23 +7,22 @@ import axios from '../../config/axios';
 
 import useAsync from '../../hooks/useAsync';
 
-const ValidationSchema = Yup.object().shape({
-  username: Yup.string().required("Username is required"),
-  password: Yup.string().required("Password is required"),
+const ValidationSchema = Yup.object({
+  username: Yup.string().required("Username is required!"),
+  password: Yup.string().required("Password is required!"),
   rememberMe: Yup.string(),
 });
 
 const Login = ({ onMoveToRegister }) => {
 
-  // tạo structure cho hàm fetchLogin, chuẩn bị đưa vào formik
-  const [loginApiData, fetchLogin] = useAsync(
-    // Async Function
-    (username, password) => {
-      axios.post("/auth/login", {
+  // tạo structure cho hàm fetchLogin, chuẩn bị đưa vào formik // Async Function
+  const [loginApiData, fetchLogin] = useAsync((username, password) => {
+    axios.
+      post("/auth/login", {
         username: username,
         password: password,
       })
-    }
+  }
     // Ket thuc async function
   );
 
@@ -34,7 +33,7 @@ const Login = ({ onMoveToRegister }) => {
     initialValues: {
       username: "",
       password: "",
-      rememberMe: false,
+      rememberMe: false
     },
     onSubmit: values => {
       // truyền biến values vào formik đã có structure tạo bên trên
@@ -43,12 +42,12 @@ const Login = ({ onMoveToRegister }) => {
     }
   });
 
+  // useEffect sao ko chay ???
   useEffect(() => {
-    if (loginApiData.error){
+    if (loginApiData.error) {
       setFailureModalVisible(true);
-      console.log(loginApiData.error);
     }
-  }, [loginApiData.error])
+  }, [loginApiData.error]);
 
 
   return (
