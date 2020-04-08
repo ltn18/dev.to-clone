@@ -30,18 +30,18 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 
 ## Quan Ngo Huu's useAsync Hook
 ### Code
-![](assets/code.PNG)
+![](images/code.PNG)
 
 ### Code Flow
 #### How to use
-![](assets/how_to_use.PNG)
+![](images/how_to_use.PNG)
 
 #### Explanation
 ##### Init state
-![](assets/init_state.PNG)
+![](images/init_state.PNG)
 
 ##### After call fetchLogin
-![](assets/after_call.PNG)
+![](images/after_call.PNG)
 
 
 
