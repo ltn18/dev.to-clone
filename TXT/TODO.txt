@@ -26,5 +26,7 @@ Logic Flow useContext:
   * sau khi rerender thì Header sẽ nhận authUser từ useContext 
     -> access được authUser.username 
 
+Note #2: 
+authHoc: 2 props truyền vào có giống nhau k?
 
 
