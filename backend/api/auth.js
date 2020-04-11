@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { register, login } = require('../services/auth');
+const { register, login, generateJWT } = require('../services/auth');
 const ERROR = require('../type/error')
 /**
  * auth/register
@@ -11,7 +11,6 @@ router.post("/register", (req, res) => {
   register(username, password)
     // vẫn lưu vào DB mặc dù 
     .then(result => {
-      console.log(result)
       res.json({ success: true });
     })
     .catch(err => {
@@ -32,9 +31,16 @@ router.post("/register", (req, res) => {
  */
 router.post("/login", (req, res) => {
   const { username, password } = req.body;
-  console.log(username, password);
   login(username, password)
-    .then((user) => res.json(user))
+    .then((user) => {
+      // Step 1: Generate JWT
+      // Step 2: Return token and user
+      const token = generateJWT(user);
+      res.json({
+        user: user,
+        token: token,
+      });
+    })
     .catch((err) => {
       res.status(401).json({ success: false, err: err.message });
     });

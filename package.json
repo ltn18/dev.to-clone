@@ -4,12 +4,13 @@
   "description": "\"# Dev_Story\"",
   "main": "test.js",
   "dependencies": {
-    "concurrently": "^5.1.0"
+    "concurrently": "^5.1.0",
+    "jsonwebtoken": "^8.5.1"
   },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "backend": "cd backend && nodemon index.js",
+    "backend": "cd backend && nodemon --inspect index.js",
     "frontend": "npm start --prefix frontend",
     "dev": "concurrently \"npm run backend\" \"npm run frontend\""
   },

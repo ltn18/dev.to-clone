@@ -1,23 +1,34 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
-const useAsync = asyncFunction => {
+export const useAsync = (initValue, asyncFunction) => {
   const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState(null);
+  const [result, setResult] = useState(initValue);
   const [error, setError] = useState(null);
+  const [lastFetch, setLastFetch] = useState();
 
-  // thay the axios
-  function execute() {
-    setLoading(true);
-    setResult(null);
+  const execute = useCallback(
+    async (...args) => {
+      setLoading(true);
+      try {
+        const data = await asyncFunction(...args);
+        setResult(data);
+        setLoading(false);
+        setLastFetch(new Date());
+        return data;
+      } catch (err) {
+        setError(err);
+        setLoading(false);
+        throw err;
+      }
+    },
+    [asyncFunction]
+  );
+
+  const reset = useCallback(() => {
+    setLoading(false);
+    setResult(initValue);
     setError(null);
-    asyncFunction
-      .apply(this, arguments)
-      .then(res => setResult(res))
-      .catch(err => setError(err))
-      .finally(() => setLoading(false));
-  }
+  }, [initValue]);
 
-  return [{ loading, result, error }, execute];
+  return [{ loading, result, error, lastFetch }, execute, reset];
 };
-
-export default useAsync;

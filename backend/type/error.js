@@ -3,6 +3,7 @@ const ERROR = {
 
   USERNAME_NOT_EXISTED: "auth/login/username_not_existed",
   PASSWORD_NOT_MATCHED: "auth/login/password_not_matched",
+  INVALID_TOKEN: "auth/invalid_token",
 
   INTERNAL_ERROR: "internal_error",
 }

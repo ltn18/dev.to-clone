@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 
 import axios from '../../config/axios';
 
-import useAsync from '../../hooks/useAsync';
+import { useAsync } from '../../hooks/useAsync';
 
 const ValidateSchema = Yup.object().shape({
   username: Yup.string()

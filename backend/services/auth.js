@@ -1,4 +1,6 @@
 const { User } = require("../models/users");
+const jwt = require('jsonwebtoken');
+
 const ERROR = require("../type/error");
 
 const register = async (username, password) => {
@@ -35,4 +37,9 @@ const login = async (username, password) => {
   return user;
 }
 
-module.exports = { register, login }
+const generateJWT = (user) => {
+  const accessToken = jwt.sign({ username: user.username }, process.env.JWT_SECRET);
+  return accessToken;
+}
+
+module.exports = { register, login, generateJWT }

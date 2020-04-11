@@ -26,7 +26,7 @@ const Header = () => {
           </Navbar.Brand>
           <div className="justify-content-end">
             <Button variant="outline-info" type="submit" onClick={moveToNewPost}>Write a post</Button>
-            {authUser && <span style={{ color: 'white' }}>&nbsp; {authUser.username}</span>}
+            {authUser && <span style={{ color: 'white' }}>&nbsp; {authUser.user.username}</span>}
           </div>
         </Container>
       </Navbar>

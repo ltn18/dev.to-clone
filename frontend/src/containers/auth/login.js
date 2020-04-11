@@ -6,7 +6,7 @@ import authCtx from '../../contexts/auth';
 
 import axios from '../../config/axios';
 
-import useAsync from '../../hooks/useAsync';
+import { useAsync } from '../../hooks/useAsync';
 
 const ValidationSchema = Yup.object({
   username: Yup.string().required("Username is required!"),
@@ -18,7 +18,7 @@ const Login = ({ onMoveToRegister }) => {
 
   const { authUser, setAuthUser } = useContext(authCtx);
   // tạo structure cho hàm fetchLogin, chuẩn bị đưa vào formik // Async Function
-  const [loginApiData, fetchLogin] = useAsync((username, password) =>
+  const [loginApiData, fetchLogin] = useAsync(null, (username, password) =>
     axios
       .post("/auth/login", {
         username: username,
@@ -35,12 +35,17 @@ const Login = ({ onMoveToRegister }) => {
     initialValues: {
       username: "",
       password: "",
-      rememberMe: false
+      rememberMe: false,
     },
     onSubmit: values => {
       // truyền biến values vào formik đã có structure tạo bên trên
-      console.log(values);
-      fetchLogin(values.username, values.password);
+      // console.log(values);
+      fetchLogin(values.username, values.password).then((authedUser) => {
+        if (values.rememberMe){
+          localStorage.setItem("jwt", authedUser.token)
+        }
+        setAuthUser(authedUser);
+      });
     }
   });
 
