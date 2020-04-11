@@ -1,11 +1,17 @@
-import React from 'react';
-import {Navbar, Button, Container} from 'react-bootstrap';
-import {useHistory} from 'react-router-dom';
+import React, { useContext } from "react";
+import { Navbar, Container, Button } from "react-bootstrap";
+import { useHistory, Link } from "react-router-dom";
+
+import authCtx from "../../contexts/auth";
 
 const Header = () => {
   const history = useHistory();
-  const moveToAuth = () => {
-    history.push("/auth");
+
+  const { authUser } = useContext(authCtx);
+  // console.log(authUser); 
+
+  const moveToNewPost = () => {
+    history.push("/new");
   }
 
   return (
@@ -13,11 +19,14 @@ const Header = () => {
       <Navbar bg="dark" variant="dark" expand="lg" className="justify-content-between" sticky="top">
         <Container fluid="md">
           <Navbar.Brand>
-            <img src="dev_logo.png" alt="Dev Story Logo" style={{width: "40px", height: "40px"}}/>
+            <Link to="/">
+              <img src="dev_logo.png" alt="Dev Story Logo" style={{ width: "40px", height: "40px" }} />
+            </Link>
             {" "}Dev Story
           </Navbar.Brand>
           <div className="justify-content-end">
-            <Button variant="outline-info" type="submit" onClick={moveToAuth}>Write a post</Button>
+            <Button variant="outline-info" type="submit" onClick={moveToNewPost}>Write a post</Button>
+            {authUser && <span style={{ color: 'white' }}>&nbsp; {authUser.username}</span>}
           </div>
         </Container>
       </Navbar>

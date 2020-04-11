@@ -1,0 +1,33 @@
+REACTJS
+media query: Add a breakpoint
+Always design for mobile first
+aria-label
+http status code
+arranging code files
+
+Functions:
+oneOf(): Yup function
+using Fetch
+newUser.save()
+crypto.pbkdf2Sync
+Schema
+pbkdf2Sync documents
+apply call bind JS
+
+Hooks:
+useContext
+useAsync
+
+Technologies used:
+axios
+yup 
+formik
+crypto
+mongoose 
+router
+JWT
+Session (giống JWT nhưng đã bị cũ)
+
+Page to read:
+Official API
+Medium

@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Form, Button, Modal, Alert } from "react-bootstrap";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import authCtx from '../../contexts/auth';
 
 import axios from '../../config/axios';
 
@@ -15,14 +16,15 @@ const ValidationSchema = Yup.object({
 
 const Login = ({ onMoveToRegister }) => {
 
+  const { authUser, setAuthUser } = useContext(authCtx);
   // tạo structure cho hàm fetchLogin, chuẩn bị đưa vào formik // Async Function
-  const [loginApiData, fetchLogin] = useAsync((username, password) => {
-    axios.
-      post("/auth/login", {
+  const [loginApiData, fetchLogin] = useAsync((username, password) =>
+    axios
+      .post("/auth/login", {
         username: username,
         password: password,
       })
-  }
+      .then(res => res.data)
     // Ket thuc async function
   );
 
@@ -49,6 +51,11 @@ const Login = ({ onMoveToRegister }) => {
     }
   }, [loginApiData.error]);
 
+  useEffect(() => {
+    if (loginApiData.result) {
+      setAuthUser(loginApiData.result);
+    }
+  }, [setAuthUser, loginApiData.result])
 
   return (
     <div className="w-50">
@@ -59,6 +66,7 @@ const Login = ({ onMoveToRegister }) => {
           <Button variant="danger" size="sm" onClick={() => setFailureModalVisible(false)}>Confirm</Button>
         </Modal.Body>
       </Modal>
+
       <h4 className="code text-center">Login</h4>
       <Form onSubmit={formik.handleSubmit}>
         <Form.Group>

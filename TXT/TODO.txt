@@ -1,0 +1,30 @@
+**************************
+*         BUG            * 
+**************************
+Bug #1: containers/auth/login
+useEffect trong containers/auth/login dường như không chạy
+-> setFailureModalVisible không chạy để hiển thị thông báo lỗi
+$$$ FIXED: Ko được dùng curly brackets trước axios do việc này cần return 
+
+Bug #2: componets/layout/header
+sử dụng authUser.username hiển thị undefined
+$$$ FIXED: khai báo { authUser } để nhận giá trị đầu tiên trong authCtx
+tuy nhiên, không thể console.log(authUser.username) ngay từ đầu vì lúc này authUser = null
+
+
+**************************
+*         NOTE           * 
+**************************
+Note #1:
+Logic Flow useContext:
+- Khởi tạo context trong /contexts/auth.js
+- App.js:
+  * Set context cho toàn bộ ứng dụng sử dụng Provider
+  * gán giá trị ban đầu context là ơstate, setState] của App 
+    -> setAuthUser thay đổi authUser 
+    -> rerender
+  * sau khi rerender thì Header sẽ nhận authUser từ useContext 
+    -> access được authUser.username 
+
+
+
