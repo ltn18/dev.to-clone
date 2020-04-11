@@ -29,19 +29,8 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 * Visual Studio Code
 
 ## Quan Ngo Huu's useAsync Hook
-### Code
-![](images/code.PNG)
+https://www.npmjs.com/package/react-hook-async
 
-### Code Flow
-#### How to use
-![](images/how_to_use.PNG)
-
-#### Explanation
-##### Init state
-![](images/init_state.PNG)
-
-##### After call fetchLogin
-![](images/after_call.PNG)
 
 
 
