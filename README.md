@@ -30,19 +30,7 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 
 ## Quan Ngo Huu's useAsync Hook
 https://www.npmjs.com/package/react-hook-async
-### Code
-![](images/code.PNG)
 
-### Code Flow
-#### How to use
-![](images/how_to_use.PNG)
-
-#### Explanation
-##### Init state
-![](images/init_state.PNG)
-
-##### After call fetchLogin
-![](images/after_call.PNG)
 
 
 
