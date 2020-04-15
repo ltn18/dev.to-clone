@@ -11,6 +11,16 @@ sử dụng authUser.username hiển thị undefined
 $$$ FIXED: khai báo { authUser } để nhận giá trị đầu tiên trong authCtx
 tuy nhiên, không thể console.log(authUser.username) ngay từ đầu vì lúc này authUser = null
 
+Bug #3: frontend\src\components\layout\header
+khi login hiển thị bth tuy nhiên ko mất form login 
+khi refresh lại thì sẽ cần data để truy cập username
+Vì vậy: 
+* Nếu login và bấm remember me thì sẽ auto trả lỗi username ở authUser.user.username -> vẫn lưu vào jwt
+* Sau đó muốn hết lỗi thì cần phải thay đổi thành authUser.data.user.username
+Vậy fix lỗi như thế nào?
+$$$ FIXED: sau khi get ở axios thì trả về data (frontend\src\hoc\authHoc)
+
+  Bug #3.1: Sau khi login vẫn chưa mất thẻ Auth. Vậy fix lỗi thế nào đây?
 
 **************************
 *         NOTE           * 

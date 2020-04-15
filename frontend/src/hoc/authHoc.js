@@ -20,7 +20,8 @@ const withAuth = (WrappedComponent) => (props) => {
           headers: {
             Authorization: "Bearer " + token,
           }
-        }),
+        })
+        .then(res => res.data),
       []
     ),
   )
@@ -37,10 +38,13 @@ const withAuth = (WrappedComponent) => (props) => {
 
 
   return !localStorage.getItem("jwt")
-    ? (<Auth {...props} />)
+    ? <Auth {...props} />
     : authProfileApi.loading
-      ? (<Loading />)
-      : (<WrappedComponent {...props} />); // 2 props truyền vào có giống nhau ko?
+      ? <Loading />
+      : authUser
+        ? <WrappedComponent {...props} />
+        : null;
+  // 2 props truyền vào có giống nhau ko?
 }
 
 export default withAuth;
