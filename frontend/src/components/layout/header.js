@@ -26,7 +26,8 @@ const Header = () => {
           </Navbar.Brand>
           <div className="justify-content-end">
             <Button variant="outline-info" type="submit" onClick={moveToNewPost}>Write a post</Button>
-            {authUser && <span style={{ color: 'white' }}>&nbsp; {authUser.user.username}</span>}
+            {authUser && <span style={{ color: 'white' }}>&nbsp; {authUser.user.username}</span>} 
+            {/* khi login hiển thị bth tuy nhiên ko mất form login -> refresh lại thì sẽ cần data để truy cập username */}
           </div>
         </Container>
       </Navbar>
