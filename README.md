@@ -1,6 +1,6 @@
-# Dev_Story
+# dev.to clone
 ## About
-Dev Story is a platform for developers to share their stories to the world. Under supervision of Quan Ngo Huu, I developed this website as a demonstration for MindX's Hackathon Final Project. 
+Dev Story is a platform for developers to share their stories to the world. 
 
 ## Available Scripts
 In the project directory, you can run:
