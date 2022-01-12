@@ -9,7 +9,7 @@
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
     "formik": "^2.1.4",
-    "markdown-it": "^10.0.0",
+    "markdown-it": "^12.3.2",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.27",
     "react": "^16.12.0",
